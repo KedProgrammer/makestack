@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-2" >
+    <%= form_for(:session,url: login_path) do |f|%>
+      <%= f.label :email %>
+      <%= f.text_field :email, class:'form-control' %>
+        <%= f.label 'password' %>
+        <%= f.password_field :password, class:'form-control' %>
+        <%= f.label :remember_me, class: "checkbox inline" do  %>
+          <%= f.check_box :remeber_me %>
+           <span>Recordar en este computador</span>
+
+         <% end %>
+        <%= f.submit "iniciar sesion", class:'btn btn-primary' %>
+    <% end %>
+
+    <%= link_to "Registrarse", signup_path %>
+
+  </div>
+
+
+
+
+</div>

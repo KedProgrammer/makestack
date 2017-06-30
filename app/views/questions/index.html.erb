@@ -1,1 +1,6 @@
 <h1>hola mundo</h1>
+<% if logged? %>
+
+    <div>logueado <%= current_user.name %></div>
+
+<% end  %>
