@@ -89,11 +89,9 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-<<<<<<< HEAD
-=======
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  host = 'fast-wave-52889.herokuapp.com'
+  host = '<your heroku app>.herokuapp.com'
   config.action_mailer.default_url_options = { host: host }
   ActionMailer::Base.smtp_settings = {
       :address        => 'smtp.sendgrid.net',
@@ -105,4 +103,3 @@ Rails.application.configure do
       :enable_starttls_auto => true
   }
 end
->>>>>>> account-activation
