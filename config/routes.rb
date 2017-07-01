@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   root 'questions#index'
   resources :users
   resources :account_activations, only: [:edit]
+  delete 'logout', to: 'sessions#destroy'
 
 end
