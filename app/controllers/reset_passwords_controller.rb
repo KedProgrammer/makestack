@@ -4,7 +4,7 @@ class ResetPasswordsController < ApplicationController
   end
 
   def create
-    byebug
+
     @user = User.find_by(email: params[:resset][:email])
 
     if @user
