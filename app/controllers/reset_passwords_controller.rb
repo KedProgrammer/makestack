@@ -11,6 +11,9 @@ class ResetPasswordsController < ApplicationController
       UserMailer.password_reset(@user).deliver_now
       flash[:info] = "Se te ha enviado un correo para que reestrablezcas tu contraseña"
       redirect_to root_url
+    else
+      flash[:warning] = "No se ha encontrado el correo"
+      render 'new'
     end
   end
 

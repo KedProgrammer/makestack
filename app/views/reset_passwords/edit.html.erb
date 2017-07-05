@@ -2,8 +2,9 @@
   <div class="col-md-6 col-md-offset-2" >
     <%= form_for(:resset,url: reset_password_path(@user)) do |f|%>
         <%= render 'shared/error_messages' %>
+        <%= hidden_field_tag :email, @user.email %>
         <%= f.label :password %>
-        <%= f.text_field :password, class:'form-control' %>
+        <%= f.password_field_field :password, class:'form-control' %>
         <%= f.label :password_confirm %>
         <%= f.password_field :password_confirm, class:'form-control' %>
         <%= f.submit "Cambiar contraseña", class:'btn btn-primary' %>
