@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
 
         flash.now[:success] = "Has iniciado session correctamente"
         redirect_to user
-        byebug
+
       else
         message  = "Account not activated. "
         message += "Check your email for the activation link."
