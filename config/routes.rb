@@ -5,5 +5,7 @@ Rails.application.routes.draw do
   get '/signup', to: 'users#new'
   root 'questions#index'
   resources :users
+  resources :account_activations, only: [:edit]
+  delete 'logout', to: 'sessions#destroy'
 
 end

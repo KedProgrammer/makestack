@@ -8,10 +8,19 @@ class SessionsController < ApplicationController
 
     if user && user.authenticate(params[:session][:password])
 
-      logged(user)
-      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      flash.now[:success] = "Has iniciado session correctamente"
-      redirect_to root_path
+      if user.activation?
+        logged user
+        params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+
+        flash.now[:success] = "Has iniciado session correctamente"
+        redirect_to user
+        byebug
+      else
+        message  = "Account not activated. "
+        message += "Check your email for the activation link."
+        flash[:warning] = message
+        redirect_to root_url
+      end
     else
       flash[:danger] = "Usuario/password invalidos"
       render 'new'
@@ -21,6 +30,7 @@ class SessionsController < ApplicationController
 
   def destroy
     log_out if logged?
+    redirect_to root_path
   end
 
 end
