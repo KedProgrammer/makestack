@@ -1,4 +1,5 @@
 class ResetPasswordsController < ApplicationController
+  before_action :get_user, only: [:edit, :update]
 
   def new
   end
@@ -18,7 +19,7 @@ class ResetPasswordsController < ApplicationController
   end
 
   def edit
-    @user = User.find_by(email: params[:email])
+
   end
 
   def update
@@ -37,6 +38,10 @@ class ResetPasswordsController < ApplicationController
 
   def user_params
     params.require(:user).permit(:password,:password_confirmation)
+  end
+
+  def get_user
+    @user = User.find_by(email: params[:email])
   end
 
 end
