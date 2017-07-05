@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-2" >
+    <%= form_for(:resset,url: reset_password_path(@user)) do |f|%>
+        <%= render 'shared/error_messages' %>
+        <%= f.label :password %>
+        <%= f.text_field :password, class:'form-control' %>
+        <%= f.label :password_confirm %>
+        <%= f.password_field :password_confirm, class:'form-control' %>
+        <%= f.submit "Cambiar contraseña", class:'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

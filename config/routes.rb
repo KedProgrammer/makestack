@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   resources :users
   resources :account_activations, only: [:edit]
   delete 'logout', to: 'sessions#destroy'
+  resources :reset_passwords
 
 end

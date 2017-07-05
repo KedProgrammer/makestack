@@ -2,9 +2,10 @@
   <div class="col-md-6 col-md-offset-2" >
     <%= form_for(:session,url: login_path) do |f|%>
       <%= f.label :email %>
-      <%= f.text_field :email, class:'form-control' %>con
+      <%= f.text_field :email, class:'form-control' %>
         <%= f.label 'password' %>
         <%= f.password_field :password, class:'form-control' %>
+        <%= link_to "Eres olvidadizo?", new_reset_password_path %>
         <%= f.label :remember_me, class: "checkbox inline" do  %>
           <%= f.check_box :remember_me %>
            <span>Recordar en este computador</span>
