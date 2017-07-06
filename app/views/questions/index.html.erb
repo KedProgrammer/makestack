@@ -1,8 +1,25 @@
-<h1>hola mundo</h1>
-<% if logged? %>
+<div class="row">
+  <div class="col-sm-8">
+    <ul class="nav nav-tabs nav-justified">
+      <li role="presentation" class="active"> <%= link_to "Nuevas" %></li>
+      <li role="presentation"><%= link_to "Mas votadas" %></li>
+    </ul>
+  </div>
+  <div class="col-sm-4">
+    <div class="col-sm-6 vertical-center" >
+      numero de preguntas
+    </div>
+    <% if logged? %>
+      <div class="col-sm-6">
+        <%= link_to "Hacer una pregunta",new_question_path, class:'btn btn-primary' %>
 
-    <div>logueado <%= current_user.name %></div>
+      </div>
+    <% end %>
 
-<% end  %>
+  </div>
+
+
+
+</div>
 
 

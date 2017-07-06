@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   resources :account_activations, only: [:edit]
   delete 'logout', to: 'sessions#destroy'
   resources :reset_passwords
+  resources :questions
 
 end
