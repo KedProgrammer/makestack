@@ -1,10 +1,11 @@
-<%= form_for(@question) do |f| %>
+<%= form_for( @question) do |f| %>
+    <%= render 'shared/error_messages' %>
     <%= f.label "Cúal es tu pregunta?" %>
     <%= f.text_field :tittle , class:'form-control'%>
     <br>
     <%= f.text_area :content, class:'form-control', 'data-role'=>'tagsinput' %>
-    <%= f.label "Tags" %>
-    <%= f.text_field :tags, class:'form-control', 'data-role'=>'tagsinput' %>
+
+
 
     <br>
     <%= f.submit "Preguntar",class:'btn btn-primary' %>

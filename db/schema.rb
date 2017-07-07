@@ -10,17 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170706212113) do
+ActiveRecord::Schema.define(version: 20170707030415) do
 
   create_table "answers", force: :cascade do |t|
     t.text     "content"
-    t.string   "imageable_type"
-    t.integer  "imageable_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.string   "imageable2_type"
+    t.integer  "imageable2_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "user_id"
-    t.index ["imageable_id", "created_at"], name: "index_answers_on_imageable_id_and_created_at"
-    t.index ["imageable_type", "imageable_id"], name: "index_answers_on_imageable_type_and_imageable_id"
+    t.index ["imageable2_type", "imageable2_id"], name: "index_answers_on_imageable2_type_and_imageable2_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
 
@@ -54,6 +53,7 @@ ActiveRecord::Schema.define(version: 20170706212113) do
     t.string   "activation_digest"
     t.boolean  "activation",        default: false
     t.datetime "activated_at"
+    t.integer  "reputation"
   end
 
 end

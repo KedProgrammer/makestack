@@ -1,15 +1,36 @@
-<% if @user.errors.any? %>
-    <div>
-      <div class="alert alert-danger">
-        El formulario contiene <%= pluralize(@user.errors.count,"error") %>
-      </div>
+
+
+<%if @user %>
+  <% if @user.errors.any? %>
       <div>
-        <% @user.errors.full_messages.each do |f| %>
-          <ul>
-            <li><%= f %></li>
-          </ul>
-        <% end %>
+        <div class="alert alert-danger">
+          El formulario contiene <%= pluralize(@user.errors.count,"error") %>
+        </div>
+        <div>
+          <% @user.errors.full_messages.each do |f| %>
+            <ul>
+              <li><%= f %></li>
+            </ul>
+          <% end %>
+        </div>
       </div>
-    </div>
+
+  <% end %>
+<% else  %>
+    <% if @question.errors.any? %>
+        <div>
+          <div class="alert alert-danger">
+            El formulario contiene <%= pluralize(@question.errors.count,"error") %>
+          </div>
+          <div>
+            <% @question.errors.full_messages.each do |f| %>
+                <ul>
+                  <li><%= f %></li>
+                </ul>
+            <% end %>
+          </div>
+        </div>
+    <% end %>
 
 <% end %>
+
