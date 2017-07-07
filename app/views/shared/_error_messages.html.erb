@@ -16,7 +16,7 @@
       </div>
 
   <% end %>
-<% else  %>
+<% elsif @question  %>
     <% if @question.errors.any? %>
         <div>
           <div class="alert alert-danger">
@@ -31,6 +31,22 @@
           </div>
         </div>
     <% end %>
+<% elsif @comment %>
+    <% if @comment.errors.any? %>
+        <div>
+          <div class="alert alert-danger">
+            El formulario contiene <%= pluralize(@comment.errors.count,"error") %>
+          </div>
+          <div>
+            <% @comment.errors.full_messages.each do |f| %>
+                <ul>
+                  <li><%= f %></li>
+                </ul>
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+
 
 <% end %>
 

@@ -1,0 +1,85 @@
+<div class="row border">
+  <div class="col-sm-8">
+    <span><h2><%= @question.tittle %></h2></span>
+
+  </div>
+  <div class="col-sm-4">
+    <% if logged? %>
+        <%= link_to "Hacer una pregunta",new_question_path, class:'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-1">
+    <div class="row">
+      <div class="col-sm-12">
+        <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+       <span class="move"><%= @question.votes == nil ? 0 : @question.votes %></span>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-11 move2">
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="panel panel-default row">
+          <div class="panel-body">
+            <span><%= @question.content %></span>
+            <% user = @question.user %>
+            <span class="display comment "><%= user.name %> <span class=" reputation"><%=user.reputation == nil ? 0:user.reputation%></span></span>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+        <% @question.comments.each do |f| %>
+            <div class="panel panel-default row">
+              <div class="panel-body">
+                <p class="comment"><%= f.content %></p>
+              </div>
+            </div>
+        <% end %>
+      </div>
+    </div>
+    <% if logged? %>
+    <div class="row">
+      <div class="col-sm-8">
+        <%= form_for(:comment,url: comments_path) do |f| %>
+            <% current_errors %>
+
+            <% if errors? %>
+              <% current_errors.each do |f| %>
+                <ul>
+                  <li><%= f %></li>
+                </ul>
+              <%end %>
+
+            <%end %>
+          <%= f.text_area :content %>
+            <%= hidden_field_tag :question, @question.id %>
+          <%= f.submit "Comentar" %>
+        <%end %>
+      </div>
+    </div>
+    <%else %>
+        <div class="row">
+          <div class="col-sm-8">
+            <%= link_to "Iniciar sesion para comentar",login_path %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+
+</div>

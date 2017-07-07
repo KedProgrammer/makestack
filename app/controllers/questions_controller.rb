@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
 
   def index
+    delete_errors
  @questions = Question.all
   end
 
@@ -20,8 +21,14 @@ class QuestionsController < ApplicationController
 
   end
 
+  def show
+@question = Question.find(params[:id])
+  end
+
   def question_params
     params.require(:question).permit(:tittle,:content)
   end
+
+
 
 end

@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   resources :reset_passwords
   resources :questions
+  resource :comments, only: [:create,:edit,:update]
 
 end
