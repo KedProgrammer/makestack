@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170710055214) do
+ActiveRecord::Schema.define(version: 20170710165643) do
 
   create_table "answers", force: :cascade do |t|
     t.text     "content"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20170710055214) do
     t.string   "username"
     t.integer  "userreputation"
     t.boolean  "error"
+    t.integer  "votes"
     t.index ["imageable2_type", "imageable2_id"], name: "index_answers_on_imageable2_type_and_imageable2_id"
   end
 

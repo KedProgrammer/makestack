@@ -11,6 +11,13 @@ Rails.application.routes.draw do
   resource :comments, only: [:create,:edit,:update]
   resource :answers, only: [:create,:edit,:update]
   resources :questions, only: [:create,:edit,:update,:new,:show]
+  get '/answer/:id/:question', to: 'answers#sumar'
+  get '/question/:id/edit', to: 'questions#sumar'
+  get '/answer/:id/:question/resta', to: 'answers#resta'
+  get '/question/:id/edit/resta', to: 'questions#resta'
+
+
+
 
 
 end

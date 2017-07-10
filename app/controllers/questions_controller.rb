@@ -1,7 +1,9 @@
 class QuestionsController < ApplicationController
 
   def index
+    delete_errors_a
     delete_errors
+    delete_errors_2
  @questions = Question.all
   end
 
@@ -12,8 +14,10 @@ class QuestionsController < ApplicationController
   def create
 
     @question = current_user.questions.build(question_params)
+    @user = current_user
     if @question.save
-      flash[:success] = "Tu pregunta se ha generado correctamente"
+      flash[:success] = "Tu pregunta se ha generado correctamente, has ganado un punto de reputación"
+      @user.reputation == nil ? @user.update_attribute(:reputation,1)  :  @user.update_attribute(:reputation, @user.reputation + 1)
       redirect_to root_path
     else
       render 'new'
@@ -23,7 +27,9 @@ class QuestionsController < ApplicationController
 
   def show
 
+
 @question = Question.find(params[:id])
+
   end
 
   def update
@@ -38,13 +44,51 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def edit
+  def sumar
     @question = Question.find(params[:id])
-    if @question.votes
-      @question.update_attribute(:votes,@question.votes + 1)
-      redirect_to @question
+    @user = @question.user
+    if logged?
+
+      if @question.votes
+        @question.update_attribute(:votes,@question.votes + 1)
+        @user.reputation == nil ? @user.update_attribute(:reputation,1)  :  @user.update_attribute(:reputation, @user.reputation + 1)
+        flash[:success] = "Has votado correctamente, el usuario #{@user.name} ha ganado un punto de reputación"
+        redirect_to @question
+      else
+        @user.reputation == nil ? @user.update_attribute(:reputation,1)  :  @user.update_attribute(:reputation, @user.reputation + 1)
+        @question.update_attribute(:votes,1)
+        flash[:success] = "Has votado correctamente, el usuario #{@user.name} ha ganado un punto de reputación"
+
+        redirect_to @question
+
+      end
     else
-      @question.update_attribute(:votes,1)
+      error_v
+      redirect_to @question
+
+    end
+  end
+
+  def resta
+
+    @question = Question.find(params[:id])
+    @user = @question.user
+    if logged?
+
+      if @question.votes
+        @question.update_attribute(:votes,@question.votes - 1)
+        @user.reputation == nil ? @user.update_attribute(:reputation, -1)  :  @user.update_attribute(:reputation, @user.reputation - 1)
+        flash[:success] = "Has votado negativamente, el usuario #{@user.name} ha perdido un punto de reputación"
+        redirect_to @question
+      else
+        @question.update_attribute(:votes, -1)
+        @user.reputation == nil ? @user.update_attribute(:reputation, -1)  :  @user.update_attribute(:reputation, @user.reputation - 1)
+        flash[:success] = "Has votado negativamente, el usuario #{@user.name} ha perdido un punto de reputación"
+        redirect_to @question
+
+      end
+    else
+      error_v
       redirect_to @question
 
     end
