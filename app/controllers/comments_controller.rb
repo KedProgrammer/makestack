@@ -1,20 +1,51 @@
 class CommentsController < ApplicationController
 
+
   def create
+    delete_errors_a
     delete_errors
+    delete_errors_2
 
     @question = Question.find_by(id: params[:question])
-    @comment = @question.comments.build(comment_params)
-    if @comment.save
-      redirect_to @question
-    else
-      errors(@comment)
-      redirect_to @question
+    @user = current_user
+    @question.answers.each do |a|
+        a.update_attribute(:error,false)
+
     end
 
 
+    if params[:answer] == "si"
+      @answer = Answer.find_by(id: params[:answer_id])
+
+
+      @comment = @answer.comments.build(comment_params)
+      if @comment.save
+        @comment.update_attribute(:username,@user.name)
+        @comment.update_attribute(:userreputation,@user.reputation)
+
+        redirect_to @question
+      else
+        errors_2(@comment)
+        @answer.update_attribute(:error,true)
+        redirect_to @question
+
+      end
+    elsif params[:answer] == "no"
+      @comment = @question.comments.build(comment_params)
+      if @comment.save
+        @comment.update_attribute(:username,@user.name)
+        @comment.update_attribute(:userreputation,@user.reputation)
+        redirect_to @question
+      else
+        errors(@comment)
+        redirect_to @question
+      end
+    end
+
 
   end
+
+
 
   def comment_params
     params.require(:comment).permit(:content)

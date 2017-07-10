@@ -2,8 +2,8 @@
 
 one:
   content: MyText
-  imageable: one
+  imageable2: one
 
 two:
   content: MyText
-  imageable: two
+  imageable2: two

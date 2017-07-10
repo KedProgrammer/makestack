@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-sm-8">
+  <div class="col-sm-9">
     <ul class="nav nav-tabs nav-justified">
       <li role="presentation" class="active"> <%= link_to "Nuevas" %></li>
       <li role="presentation"><%= link_to "Mas votadas" %></li>
@@ -8,30 +8,30 @@
     <% if !@questions.empty? %>
       <% @questions.each do |f| %>
           <div class="row filas">
-            <div class="col-sm-4">
+            <div class="col-sm-5 ">
               <div class="row">
                 <div class="col-sm-4">
                   <div>
-                    <span>15</span>
-                    <span>votos</span>
+                    <span gris><%= f.votes %></span>
+                    <span class="gris block" >votos</span>
 
                   </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 padding">
                   <div>
-                    <span>15</span>
-                    <span>votos</span>
+                    <span><%= f.comments.count %></span>
+                    <span class="gris">Respuestas</span>
                   </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 padding">
                   <div>
-                    <span>15</span>
-                    <span>votos</span>
+                    <span><%= f.answers.count %></span>
+                    <span class="gris">Comentarios</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-7">
               <div class="row">
                 <div class="col-sm-12">
                   <%= link_to f.tittle, question_path(f) %>
@@ -49,11 +49,11 @@
     No hay preguntas
     <%end %>
   </div>
-  <div class="col-sm-4">
+  <div class="col-sm-3">
     <div class="col-sm-6 vertical-center" >
       <div class="row">
         <div class="col-sm-12">
-          <span ><%= @questions.count %></span>
+          <span  ><%= @questions.count %></span>
         </div>
       </div>
       <div class="row">
