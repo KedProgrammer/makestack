@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get '/question/:id/edit', to: 'questions#sumar'
   get '/answer/:id/:question/resta', to: 'answers#resta'
   get '/question/:id/edit/resta', to: 'questions#resta'
+  get '/index/:order', to: 'questions#index'
+  
 
 
 

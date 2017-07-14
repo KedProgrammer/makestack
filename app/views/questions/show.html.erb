@@ -1,8 +1,13 @@
 <div class="row border">
   <div class="col-sm-8">
     <% if error_v? %>
-        <div>Debes estar logueado para votar</div>
-    <%end %>
+        <div>Debes estar logueado para votar (<%= link_to "iniciar sesion", login_path %>)</div>
+    <% elsif error_r? %>
+        <div>Debes tener mas de 5 puntos para votar</div>
+    <% elsif error_v_a? %>
+        <div>Debes tener mas de 5 puntos para votar</div> 
+    <% end %>
+
     <span><h2><%= @question.tittle %></h2></span>
 
   </div>
@@ -89,7 +94,7 @@
     <%else %>
         <div class="row">
           <div class="col-sm-8">
-            <%= link_to "Iniciar sesion para comentar",login_path,class:'btn btn-primary' %>
+            <%= link_to "Iniciar sesion para comentar",login_path %>
           </div>
         </div>
     <% end %>
@@ -127,9 +132,7 @@
         <div class="col-sm-12">
           <div class="panel panel-default row">
             <div class="panel-body">
-              <% if error_v_a? %>
-                  <div>Debes estar logueado para votar</div>
-              <%end %>
+              
               <span><%= f.content %></span>
               <div class="col-sm-6 col-sm-offset-10">
                 <% user = User.find_by(name: f.username) %>
@@ -185,7 +188,7 @@
       <%else %>
           <div class="row">
             <div class="col-sm-8">
-              <%= link_to "Iniciar sesion para Comentar",login_path, class:'btn btn-primary' %>
+              <%= link_to "Iniciar sesion para Comentar",login_path %>
             </div>
           </div>
       <% end %>
@@ -216,7 +219,7 @@
             <%= f.submit "Responder", class:'btn btn-primary' %>
         <%end %>
     <% else %>
-        <%= link_to "Iniciar sesion para Responder",login_path, class:'btn btn-primary' %>
+        <%= link_to "Iniciar sesion para Responder",login_path %>
     <% end %>
 
   </div>

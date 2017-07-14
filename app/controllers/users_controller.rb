@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      @user.update_attribute(:reputation,0)
       UserMailer.account_activation(@user).deliver_now
       flash[:info] = "Revisa tu email para activar tu cuenta"
       redirect_to root_url

@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :comments, :as => :imageable
   has_many :answers, :as => :imageable2
   has_many :questions
+  
 
 
   attr_accessor :remember_token, :activation_token, :reset_token

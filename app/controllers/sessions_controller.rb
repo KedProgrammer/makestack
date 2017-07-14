@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
         params[:session][:remember_me] == '1' ? remember(user) : forget(user)
 
         flash.now[:success] = "Has iniciado session correctamente"
-        redirect_to user
+        redirect_to root_path
 
       else
         message  = "Account not activated. "

@@ -1,74 +1,90 @@
+
 <div class="row">
-  <div class="col-sm-9">
-    <ul class="nav nav-tabs nav-justified">
-      <li role="presentation" class="active"> <%= link_to "Nuevas" %></li>
-      <li role="presentation"><%= link_to "Mas votadas" %></li>
-    </ul>
-    <br>
-    <% if !@questions.empty? %>
-      <% @questions.each do |f| %>
-          <div class="row filas">
-            <div class="col-sm-5 ">
-              <div class="row">
-                <div class="col-sm-4">
-                  <div>
-                    <span gris><%= f.votes %></span>
-                    <span class="gris block" >votos</span>
+<div class="col-sm-8">
+  <ul class="nav nav-tabs nav-justified">
+    <li role="presentation" > <%= link_to "nuevas", '/index/nuevas' %></li>
+    <li role="presentation"><%= link_to "Mas votadas", '/index/masvotadas' %></li>
+    <li role="presentation"><%= link_to "Mas Repuestas", '/index/masrespuestas' %></li>
 
-                  </div>
-                </div>
-                <div class="col-sm-4 padding">
-                  <div>
-                    <span><%= f.comments.count %></span>
-                    <span class="gris">Respuestas</span>
-                  </div>
-                </div>
-                <div class="col-sm-4 padding">
-                  <div>
-                    <span><%= f.answers.count %></span>
-                    <span class="gris">Comentarios</span>
-                  </div>
+  </ul>
+  <br>
+  <% if !@questions.empty? %>
+    <% @questions.each do |f| %>
+        <div class="row filas">
+          <div class="col-sm-5 ">
+            <div class="row">
+              <div class="col-sm-4">
+                <div>
+                  <span gris><%= f.votes %></span>
+                  <span class="gris block" >votos</span>
+
                 </div>
               </div>
-            </div>
-            <div class="col-sm-7">
-              <div class="row">
-                <div class="col-sm-12">
-                  <%= link_to f.tittle, question_path(f) %>
+              <div class="col-sm-4 padding">
+                <div>
+                  <span><%= f.answers.count %></span>
+                  <span class="gris">Respuestas</span>
                 </div>
               </div>
-              <div class="row">
-                <% user = f.user %>
-                <span class="nombre"><%= user.name%>    <span class="reputation"><%=user.reputation == nil ? 0:user.reputation%></span> </span>
-
+              <div class="col-sm-4 padding">
+                <div>
+                  <span><%= f.comments.count %></span>
+                  <span class="gris">Comentarios</span>
+                </div>
               </div>
             </div>
           </div>
-      <% end %>
-    <% else %>
-    No hay preguntas
-    <%end %>
-  </div>
-  <div class="col-sm-3">
-    <div class="col-sm-6 vertical-center" >
-      <div class="row">
-        <div class="col-sm-12">
-          <span  ><%= @questions.count %></span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <span>Preguntas</span>
-        </div>
-      </div>
+          <div class="col-sm-7">
+            <div class="row">
+              <div class="col-sm-12">
+                <%= link_to f.tittle, question_path(f) %>
+              </div>
+              <% user = f.user %>
+              <div class="col-sm-12 col-sm-offset-10">
 
-    </div>
+              <span ><%= user.name%>    <span class="reputation"><%=user.reputation == nil ? 0:user.reputation%></span> </span> 
+              </div>
+              <div class="col-sm-12 col-sm-offset-10">
+
+              <span class="gris"><%= timer(time_ago_in_words(f.created_at)) %></span> 
+              </div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+  <% else %>
+  No hay preguntas
+  <%end %>
+</div>
+<div class="col-sm-4">
+  <div class="row">
     <% if logged? %>
-      <div class="col-sm-6">
+      <div class="col-sm-6 center">  
+        <h3><%= @questions.count %> Preguntas</h3>
+      </div>
+      <div class="col-sm-6 vertical">  
+        
         <%= link_to "Hacer una pregunta",new_question_path, class:'btn btn-primary' %>
+        
+      </div>
+    <% else %>
+      <div class="col-sm-6 center">
+       <h3><%= @questions.count %> Preguntas</h3>
       </div>
     <% end %>
+    <div class="col-sm-12 margen">
+      <div class="col-sm-12 center">
+      <span>Top reputaciones</span>
+      </div>
+      <% @users.each do |f| %>
+        <div class="col-sm-12 center ">
+        <span><%= f.name %></span><span class="reputation"><%= f.reputation %></span>
+        </div>
+      <% end %> 
+    </div>
   </div>
 </div>
+</div>
+
 
 

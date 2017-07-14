@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
     delete_errors_a
     delete_errors
     delete_errors_2
+    delete_errors_r
 
     @question = Question.find_by(id: params[:question])
     @user = current_user
@@ -21,7 +22,7 @@ class CommentsController < ApplicationController
       @comment = @answer.comments.build(comment_params)
       if @comment.save
         @comment.update_attribute(:username,@user.name)
-        @comment.update_attribute(:userreputation,@user.reputation)
+        
 
         redirect_to @question
       else
@@ -34,7 +35,7 @@ class CommentsController < ApplicationController
       @comment = @question.comments.build(comment_params)
       if @comment.save
         @comment.update_attribute(:username,@user.name)
-        @comment.update_attribute(:userreputation,@user.reputation)
+        
         redirect_to @question
       else
         errors(@comment)
