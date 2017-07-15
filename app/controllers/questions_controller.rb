@@ -6,6 +6,7 @@ class QuestionsController < ApplicationController
     delete_errors
     delete_errors_2
     delete_errors_r
+    delete_error_v_va
     
     if params[:order] == "nuevas"
      @questions = Question.order(created_at: :desc)

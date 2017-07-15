@@ -5,7 +5,7 @@
     <% elsif error_r? %>
         <div>Debes tener mas de 5 puntos para votar</div>
     <% elsif error_v_a? %>
-        <div>Debes tener mas de 5 puntos para votar</div> 
+        <div>Debes estar logueado para votar (<%= link_to "iniciar sesion", login_path %>)</div>
     <% end %>
 
     <span><h2><%= @question.tittle %></h2></span>
