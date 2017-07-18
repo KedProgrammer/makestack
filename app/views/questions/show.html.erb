@@ -8,8 +8,7 @@
         <div>Debes estar logueado para votar (<%= link_to "iniciar sesion", login_path %>)</div>
     <% end %>
 
-    <span><h2><%= @question.tittle %></h2></span>
-
+    <span><h2><%= markdown(@question.tittle) %></h2></span>
   </div>
   <div class="col-sm-4">
     <% if logged? %>
@@ -21,7 +20,7 @@
   <div class="col-sm-1">
     <div class="row">
       <div class="col-sm-12">
-        <a href="/question/<%= @question.id %>/edit"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a>
+        <a href="/question/<%= @question.id %>/edit/sumar"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a>
       </div>
 
     </div>
@@ -42,10 +41,15 @@
       <div class="col-sm-12">
         <div class="panel panel-default row">
           <div class="panel-body">
-            <span><%= @question.content %></span>
+            <span class="pregunta"><%= markdown(@question.content )%></span>
             <% user = @question.user %>
+            <% if logged? %>
+              <% if current_user.id == user.id%>
+                <div> <%= link_to "Editar", edit_question_path(@question) %></div>
+              <% end %>
+            <% end %>
             <div class="col-sm-6 col-sm-offset-9">
-              <span class="display comment "><%= user.name %> <span class=" reputation"><%=user.reputation == nil ? 0:user.reputation%></span></span>
+              <span class="display comment "><%= user.name %> <span class=" reputation"><%=user.reputation%></span></span>
             </div>
 
 
@@ -55,11 +59,11 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-sm-12">
         <% @question.comments.each do |f| %>
             <div class="panel panel-default row">
               <div class="panel-body">
-                <p class="comment"><%= f.content %></p>
+                <p class="comment"><%= markdown(f.content) %></p>
                 <div class="col-sm-12 col-sm-offset-9">
                   <% user = User.find_by(name: f.username) %>
                   <span class="display comment"><%= user.name %> <span class=" reputation"><%=user.reputation == nil ? 0:user.reputation%></span></span>
@@ -106,11 +110,11 @@
    <h2><%= @question.answers.count %> respuestas</h2>
   </div>
   <% @question.answers.each do |f| %>
-  <div class="col-sm-12">
+  
     <div class="col-sm-1">
       <div class="row">
         <div class="col-sm-12">
-          <a href="/answer/<%= f.id %>/<%= @question.id %>"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a>
+          <a href="/answer/<%= f.id %>/<%= @question.id %>/sumar"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a>
 
         </div>
 
@@ -133,12 +137,22 @@
           <div class="panel panel-default row">
             <div class="panel-body">
               
-              <span><%= f.content %></span>
+              <span><%= markdown(f.content) %></span>
+              <% user = User.find_by(name: f.username) %>
+              <% if logged? %>
+              <% if current_user.id == user.id%>
+                <div> <%= link_to "Editar", edit_answer_path(f) %></div>
+              <% end %>
+            <% end %>
               <div class="col-sm-6 col-sm-offset-10">
                 <% user = User.find_by(name: f.username) %>
-                <span class="display comment"><%= user.name %> <span class=" reputation"><%= user.reputation == nil ? 0:user.reputation%></span></span>
+                <span class="display comment"><%= user.name %> <span class=" reputation"><%= user.reputation%></span></span>
 
               </div>
+              <div class="col-sm-12 col-sm-offset-10">
+
+                <span class="gris"><%= timer(time_ago_in_words(f.created_at)) %></span> 
+                </div>
             </div>
           </div>
         </div>
@@ -149,10 +163,10 @@
           <% f.comments.each do |t| %>
               <div class="panel panel-default row">
                 <div class="panel-body">
-                  <p class="comment"><%= t.content %></p>
+                  <p class="comment"><%= markdown(t.content) %></p>
                   <div class="col-sm-6 col-sm-offset-9">
                     <% user = User.find_by(name: t.username) %>
-                    <span class="display comment"><%= user.name %> <span class=" reputation"><%=user.reputation == nil ? 0:user.reputation%></span></span>
+                    <span class="display comment"><%= user.name %> <span class=" reputation"><%=user.reputation%></span></span>
 
                   </div>
                 </div>
@@ -193,7 +207,7 @@
           </div>
       <% end %>
     </div>
-  </div>
+  
   <% end %>
 </div>
 

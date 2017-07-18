@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170711204559) do
+ActiveRecord::Schema.define(version: 20170717213610) do
 
   create_table "answers", force: :cascade do |t|
     t.text     "content"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20170711204559) do
     t.boolean  "error"
     t.string   "username"
     t.integer  "votes"
+    t.integer  "questionid"
     t.index ["imageable2_type", "imageable2_id"], name: "index_answers_on_imageable2_type_and_imageable2_id"
   end
 
@@ -58,6 +59,10 @@ ActiveRecord::Schema.define(version: 20170711204559) do
     t.boolean  "activation",        default: false
     t.datetime "activated_at"
     t.integer  "reputation"
+    t.string   "country"
+    t.integer  "age"
+    t.string   "gender"
+    t.text     "qvalidation"
   end
 
 end

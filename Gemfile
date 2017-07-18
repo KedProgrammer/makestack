@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails',        '5.0.3'
+gem 'redcarpet',     '3.4.0'
 gem 'bootstrap-tagsinput-rails'
 gem 'bootstrap-sass', '3.3.7'
 gem 'puma',         '3.9.1'

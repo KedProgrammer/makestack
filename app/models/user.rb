@@ -2,11 +2,13 @@ class User < ApplicationRecord
   has_many :comments, :as => :imageable
   has_many :answers, :as => :imageable2
   has_many :questions
+  serialize :qvalidation
   
 
 
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save :downcase_email
+  
   before_create :create_activation_digest
 
 
@@ -47,6 +49,15 @@ class User < ApplicationRecord
     self.email = email.downcase
 
   end
+
+  def had_voted?(id)
+     self.qvalidation["#{id}"]
+    
+  end
+
+
+
+ 
 
   private
   def create_activation_digest

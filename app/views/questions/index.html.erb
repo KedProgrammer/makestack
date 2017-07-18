@@ -37,12 +37,12 @@
             <div class="col-sm-7">
               <div class="row">
                 <div class="col-sm-12">
-                  <%= link_to f.tittle, question_path(f) %>
+                  <%= markdown(link_to f.tittle, question_path(f)) %>
                 </div>
                 <% user = f.user %>
                 <div class="col-sm-12 col-sm-offset-10">
 
-                <span ><%= user.name%>    <span class="reputation"><%=user.reputation == nil ? 0:user.reputation%></span> </span> 
+                <span ><%= link_to user.name, user%>    <span class="reputation"><%=user.reputation%></span> </span> 
                 </div>
                 <div class="col-sm-12 col-sm-offset-10">
 
@@ -76,7 +76,7 @@
         </div>
         <% @users.each do |f| %>
           <div class="col-sm-12 center ">
-            <span><%= f.name %></span><span class="reputation"><%= f.reputation %></span>
+            <span><%= link_to f.name , f %></span><span class="reputation"><%= f.reputation %></span>
           </div>
         <% end %> 
       </div>

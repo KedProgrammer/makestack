@@ -37,9 +37,10 @@ class QuestionsController < ApplicationController
       @question.update_attribute(:votes,0)
        @question.update_attribute(:respuestas,0)
       flash[:success] = "Tu pregunta se ha generado correctamente, has ganado un punto de reputación"
-      @user.reputation == nil ? @user.update_attribute(:reputation,1)  :  @user.update_attribute(:reputation, @user.reputation + 1)
+      @user.update_attribute(:reputation, @user.reputation + 1)
       redirect_to root_path
     else
+
       render 'new'
     end
 
@@ -58,15 +59,21 @@ class QuestionsController < ApplicationController
 
   def update
     @question = Question.find(params[:id])
-    if @question.votes
-      @question.update_attribute(:votes,@question.votes + 1)
-      redirect_to root_path
+    
+    if @question.update(question_params)
+      flash[:success] = "Se ha editado la pregunta correctamente"
+      redirect_to @question
     else
-      @question.update_attribute(:votes,1)
-      redirect_to root_path
+      render 'edit'
 
     end
   end
+
+
+
+  def edit  
+    @question = Question.find(params[:id])
+  end  
 
 
 
@@ -79,7 +86,7 @@ class QuestionsController < ApplicationController
     @current_user = current_user
     if logged?
       if @current_user.reputation < 5
-        error_r
+        flash[:danger] = "Debes tener mas de 5 puntos para votar"
         redirect_to @question
       else  
         @question.update_attribute(:votes,@question.votes + 1)
@@ -104,7 +111,7 @@ class QuestionsController < ApplicationController
     @current_user = current_user
     if logged?
       if @current_user.reputation < 5
-        error_r
+        flash[:danger] = "Debes tener mas de 5 puntos para votar"
         redirect_to @question
       else  
         @question.update_attribute(:votes,@question.votes - 1)

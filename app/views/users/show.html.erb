@@ -1,1 +1,61 @@
-<div>hola <%= @user.name %></div>
+<div class="row">
+
+	<div class="col-sm-6">
+		<div class="row">
+			<div class="col-sm-12 col-sm-offset-6" >
+				<h2>Reputación</h2>
+				
+			</div>
+			<div class="col-sm-12 col-sm-offset-9">
+				<span><h3><%= @user.reputation %> </h3></span>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="row">
+			<div class="col-sm-12">
+				<span> <h4>País:</h4> <%= @user.country %></span>
+			</div>
+			<div class="col-sm-12">
+				<span> <h4>Edad:</h4> <%= @user.age %></span>
+			</div>
+			<div class="col-sm-12">
+				<span> <h4>Genero:</h4> <%= @user.gender %></span>
+			</div>
+			<% if current_user.id ==  @user.id%>
+                <div> <%= link_to "Editar", edit_user_path(@user) %></div>
+            <% end %>
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<div class="row">
+			<div class="col-sm-12 col-sm-offset-5">
+				<h1>Actividad</h1>
+			</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="col-sm-12 col-sm-offset-6">
+					<h2>Preguntas(<%= @user.questions.count %>)</h2>
+					<% @user.questions.each do |f| %>
+						<div class="col-sm-12">
+						 <%= link_to f.tittle , f %>
+						</div>
+					<% end %>	
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="col-sm-12">
+					<h2>Respuestas(<%= @user.answers.count %>)</h2>
+						<% @user.answers.each do |f| %>
+						<% @question = Question.find_by(id: f.questionid) %>
+						<div class="col-sm-12">
+						 <%= link_to @question.tittle , @question %>
+						</div>
+					<% end %>	
+
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+</div>
