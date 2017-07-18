@@ -6,7 +6,7 @@ def edit
     user.update_attribute(:activated_at, Time.zone.now)
     logged user
     flash[:success] = "Cuenta Activada¡"
-    redirect_to user
+    redirect_to root_url
   else
     flash[:danger] = "link invalido"
     redirect_to root_url

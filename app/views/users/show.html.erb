@@ -38,7 +38,7 @@
 					<h2>Preguntas(<%= @user.questions.count %>)</h2>
 					<% @user.questions.each do |f| %>
 						<div class="col-sm-12">
-						 <%= link_to f.tittle , f %>
+						 <%= markdown(link_to f.tittle , f) %>
 						</div>
 					<% end %>	
 				</div>
@@ -49,7 +49,7 @@
 						<% @user.answers.each do |f| %>
 						<% @question = Question.find_by(id: f.questionid) %>
 						<div class="col-sm-12">
-						 <%= link_to @question.tittle , @question %>
+						 <%= markdown(link_to @question.tittle , @question) %>
 						</div>
 					<% end %>	
 
