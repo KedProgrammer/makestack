@@ -63,7 +63,7 @@
         <% @question.comments.each do |f| %>
             <div class="panel panel-default row">
               <div class="panel-body">
-                <p class="comment"><%= markdown(f.content) %></p>
+                <span class="comment"><%= markdown(f.content) %></span>
                 <div class="col-sm-12 col-sm-offset-9">
                   <% user = User.find_by(name: f.username) %>
                   <span class="display comment"><%= user.name %> <span class=" reputation"><%=user.reputation == nil ? 0:user.reputation%></span></span>
@@ -163,7 +163,7 @@
           <% f.comments.each do |t| %>
               <div class="panel panel-default row">
                 <div class="panel-body">
-                  <p class="comment"><%= markdown(t.content) %></p>
+                  <span class="comment"><%= markdown(t.content) %></span>
                   <div class="col-sm-6 col-sm-offset-9">
                     <% user = User.find_by(name: t.username) %>
                     <span class="display comment"><%= user.name %> <span class=" reputation"><%=user.reputation%></span></span>
