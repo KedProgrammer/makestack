@@ -144,12 +144,12 @@
                 <div> <%= link_to "Editar", edit_answer_path(f) %></div>
               <% end %>
             <% end %>
-              <div class="col-sm-6 col-sm-offset-10">
+              <div class="col-sm-6 col-sm-offset-9">
                 <% user = User.find_by(name: f.username) %>
                 <span class="display comment"><%= user.name %> <span class=" reputation"><%= user.reputation%></span></span>
 
               </div>
-              <div class="col-sm-12 col-sm-offset-10">
+              <div class="col-sm-12 col-sm-offset-9">
 
                 <span class="gris"><%= timer(time_ago_in_words(f.created_at)) %></span> 
                 </div>
