@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rails',        '5.0.3'
+
+gem 'flexbox_rb'
 gem 'redcarpet',     '3.4.0'
 gem 'bootstrap-tagsinput-rails'
 gem 'bootstrap-sass', '3.3.7'

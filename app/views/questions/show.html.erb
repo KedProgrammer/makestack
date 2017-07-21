@@ -1,133 +1,45 @@
-<div class="row border">
-  <div class="col-sm-8">
-    <% if error_v? %>
-        <div>Debes estar logueado para votar (<%= link_to "iniciar sesion", login_path %>)</div>
-    <% elsif error_r? %>
-        <div>Debes tener mas de 5 puntos para votar</div>
-    <% elsif error_v_a? %>
-        <div>Debes estar logueado para votar (<%= link_to "iniciar sesion", login_path %>)</div>
+<%= render 'layouts/header' %>
+<div class="container">
+   <% flash.each do |type,content| %>
+    <div class="alert alert-<%=type%>">
+     <%= content %>
+    </div>
     <% end %>
+  <div class="row ">
+    <div class="col-sm-8">
+      <% if error_v? %>
+          <div>Debes estar logueado para votar (<%= link_to "iniciar sesion", login_path %>)</div>
+      <% elsif error_r? %>
+          <div>Debes tener mas de 5 puntos para votar</div>
+      <% elsif error_v_a? %>
+          <div>Debes estar logueado para votar (<%= link_to "iniciar sesion", login_path %>)</div>
+      <% end %>
 
-    <span><h2><%= markdown(@question.tittle) %></h2></span>
-  </div>
-  <div class="col-sm-4">
-    <% if logged? %>
-        <%= link_to "Hacer una pregunta",new_question_path, class:'btn btn-primary' %>
-    <% end %>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-1">
-    <div class="row">
-      <div class="col-sm-12">
-        <a href="/question/<%= @question.id %>/edit/sumar"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a>
-      </div>
-
+      <span><h2><%= markdown(@question.tittle) %></h2></span>
     </div>
-    <div class="row">
-      <div class="col-sm-12">
-       <span class="move"><%= @question.votes == nil ? 0 : @question.votes %></span>
-      </div>
-
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <a href="/question/<%= @question.id %>/edit/resta"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></a>
-      </div>
+    <div class="col-sm-4">
+      <% if logged? %>
+          <%= link_to "Hacer una pregunta",new_question_path, class:'btn btn-primary' %>
+      <% end %>
     </div>
   </div>
-  <div class="col-sm-11 move2">
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="panel panel-default row">
-          <div class="panel-body">
-            <span class="pregunta"><%= markdown(@question.content )%></span>
-            <% user = @question.user %>
-            <% if logged? %>
-              <% if current_user.id == user.id%>
-                <div> <%= link_to "Editar", edit_question_path(@question) %></div>
-              <% end %>
-            <% end %>
-            <div class="col-sm-6 col-sm-offset-9">
-              <span class="display comment "><%= user.name %> <span class=" reputation"><%=user.reputation%></span></span>
-            </div>
-
-
-
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <% @question.comments.each do |f| %>
-            <div class="panel panel-default row">
-              <div class="panel-body">
-                <span class="comment"><%= markdown(f.content) %></span>
-                <div class="col-sm-12 col-sm-offset-9">
-                  <% user = User.find_by(name: f.username) %>
-                  <span class="display comment"><%= user.name %> <span class=" reputation"><%=user.reputation == nil ? 0:user.reputation%></span></span>
-
-                </div>
-              </div>
-            </div>
-        <% end %>
-      </div>
-    </div>
-    <% if logged? %>
-    <div class="row">
-      <div class="col-sm-8">
-        <%= form_for(:comment,url: comments_path) do |f| %>
-            <% current_errors %>
-
-            <% if errors? %>
-              <% current_errors.each do |f| %>
-                <ul>
-                  <li><%= f %></li>
-                </ul>
-              <%end %>
-
-            <%end %>
-          <%= f.text_area :content, class:'form-control' %>
-            <%= hidden_field_tag :question, @question.id %>
-            <%= hidden_field_tag :answer, "no"%>
-          <%= f.submit "Comentar", class:'btn btn-primary' %>
-        <%end %>
-      </div>
-    </div>
-    <%else %>
-        <div class="row">
-          <div class="col-sm-8">
-            <%= link_to "Iniciar sesion para comentar",login_path %>
-          </div>
-        </div>
-    <% end %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-sm-12">
-   <h2><%= @question.answers.count %> respuestas</h2>
-  </div>
-  <% @question.answers.each do |f| %>
-  
+  <div class="row">
     <div class="col-sm-1">
       <div class="row">
         <div class="col-sm-12">
-          <a href="/answer/<%= f.id %>/<%= @question.id %>/sumar"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a>
-
+          <a href="/question/<%= @question.id %>/edit/sumar"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a>
         </div>
 
       </div>
       <div class="row">
         <div class="col-sm-12">
-          <span class="move"><%= f.votes == nil ? 0 : f.votes %></span>
+         <span class="move"><%= @question.votes == nil ? 0 : @question.votes %></span>
         </div>
 
       </div>
       <div class="row">
         <div class="col-sm-12">
-          <a href="/answer/<%= f.id %>/<%= @question.id %>/resta"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></a>
+          <a href="/question/<%= @question.id %>/edit/resta"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></a>
         </div>
       </div>
     </div>
@@ -136,37 +48,32 @@
         <div class="col-sm-12">
           <div class="panel panel-default row">
             <div class="panel-body">
-              
-              <span><%= markdown(f.content) %></span>
-              <% user = User.find_by(name: f.username) %>
+              <span class="pregunta"><%= markdown(@question.content )%></span>
+              <% user = @question.user %>
               <% if logged? %>
-              <% if current_user.id == user.id%>
-                <div> <%= link_to "Editar", edit_answer_path(f) %></div>
+                <% if current_user.id == user.id%>
+                  <div> <%= link_to "Editar", edit_question_path(@question) %></div>
+                <% end %>
               <% end %>
-            <% end %>
               <div class="col-sm-6 col-sm-offset-9">
-                <% user = User.find_by(name: f.username) %>
-                <span class="display comment"><%= user.name %> <span class=" reputation"><%= user.reputation%></span></span>
-
+                <span class="display comment "><%= user.name %> <span class=" reputation"><%=user.reputation%></span></span>
               </div>
-              <div class="col-sm-12 col-sm-offset-9">
 
-                <span class="gris"><%= timer(time_ago_in_words(f.created_at)) %></span> 
-                </div>
+
+
             </div>
           </div>
         </div>
-
       </div>
-      <div class="row ">
+      <div class="row">
         <div class="col-sm-12">
-          <% f.comments.each do |t| %>
+          <% @question.comments.each do |f| %>
               <div class="panel panel-default row">
                 <div class="panel-body">
-                  <span class="comment"><%= markdown(t.content) %></span>
-                  <div class="col-sm-6 col-sm-offset-9">
-                    <% user = User.find_by(name: t.username) %>
-                    <span class="display comment"><%= user.name %> <span class=" reputation"><%=user.reputation%></span></span>
+                  <span class="comment"><%= markdown(f.content) %></span>
+                  <div class="col-sm-12 col-sm-offset-9">
+                    <% user = User.find_by(name: f.username) %>
+                    <span class="display comment"><%= user.name %> <span class=" reputation"><%=user.reputation == nil ? 0:user.reputation%></span></span>
 
                   </div>
                 </div>
@@ -176,66 +83,167 @@
       </div>
       <% if logged? %>
       <div class="row">
-        <div class="col-sm-12 margen ">
-          <%= form_for(:comment,url: comments_path) do |t| %>
-              <% current_errors_2 %>
+        <div class="col-sm-8">
+          <%= form_for(:comment,url: comments_path) do |f| %>
+              <% current_errors %>
 
-              <% if errors_2? %>
-                  <% current_errors_2.each do |t| %>
-                      <ul>
-                        <% if f.error  %>
-                        <li><%= t %></li>
-                      <% end %>
-                      </ul>
-                  <%end %>
+              <% if errors? %>
+                <% current_errors.each do |f| %>
+                  <ul>
+                    <li><%= f %></li>
+                  </ul>
+                <%end %>
 
               <%end %>
-              <%= t.text_area :content, class:'form-control ' %>
-              <%= hidden_field_tag :answer_id, f.id %>
-              <%= hidden_field_tag :answer, "si" %>
+            <%= f.text_area :content, class:'form-control' %>
               <%= hidden_field_tag :question, @question.id %>
-
-              <%= t.submit "Comentar", class:'btn btn-primary' %>
+              <%= hidden_field_tag :answer, "no"%>
+            <%= f.submit "Comentar", class:'btn btn-primary' %>
           <%end %>
         </div>
       </div>
       <%else %>
           <div class="row">
             <div class="col-sm-8">
-              <%= link_to "Iniciar sesion para Comentar",login_path %>
+              <%= link_to "Iniciar sesion para comentar",login_path %>
             </div>
           </div>
       <% end %>
     </div>
-  
-  <% end %>
-</div>
-
-<div class="row">
-  <div class="col-sm-6 col-sm-offset-2">
-    <h2>Responder</h2>
   </div>
-  <div class="col-sm-12">
-   <% if logged? %>
-        <%= form_for(:answer,url: answers_path) do |f| %>
-            <% current_errors_a %>
 
-            <% if errors_a? %>
-                <% current_errors_a.each do |f| %>
-                    <ul>
-                      <li><%= f %></li>
-                    </ul>
+  <div class="row">
+    <div class="col-sm-12">
+     <h2><%= @question.answers.count %> respuestas</h2>
+    </div>
+    <% @question.answers.each do |f| %>
+    
+      <div class="col-sm-1">
+        <div class="row">
+          <div class="col-sm-12">
+            <a href="/answer/<%= f.id %>/<%= @question.id %>/sumar"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a>
+
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <span class="move"><%= f.votes == nil ? 0 : f.votes %></span>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <a href="/answer/<%= f.id %>/<%= @question.id %>/resta"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-11 move2">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="panel panel-default row">
+              <div class="panel-body">
+                
+                <span><%= markdown(f.content) %></span>
+                <% user = User.find_by(name: f.username) %>
+                <% if logged? %>
+                <% if current_user.id == user.id%>
+                  <div> <%= link_to "Editar", edit_answer_path(f) %></div>
+                <% end %>
+              <% end %>
+                <div class="col-sm-6 col-sm-offset-9">
+                  <% user = User.find_by(name: f.username) %>
+                  <span class="display comment"><%= user.name %> <span class=" reputation"><%= user.reputation%></span></span>
+
+                </div>
+                <div class="col-sm-12 col-sm-offset-9">
+
+                  <span class="gris"><%= timer(time_ago_in_words(f.created_at)) %></span> 
+                  </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row ">
+          <div class="col-sm-12">
+            <% f.comments.each do |t| %>
+                <div class="panel panel-default row">
+                  <div class="panel-body">
+                    <span class="comment"><%= markdown(t.content) %></span>
+                    <div class="col-sm-6 col-sm-offset-9">
+                      <% user = User.find_by(name: t.username) %>
+                      <span class="display comment"><%= user.name %> <span class=" reputation"><%=user.reputation%></span></span>
+
+                    </div>
+                  </div>
+                </div>
+            <% end %>
+          </div>
+        </div>
+        <% if logged? %>
+        <div class="row">
+          <div class="col-sm-12 margen ">
+            <%= form_for(:comment,url: comments_path) do |t| %>
+                <% current_errors_2 %>
+
+                <% if errors_2? %>
+                    <% current_errors_2.each do |t| %>
+                        <ul>
+                          <% if f.error  %>
+                          <li><%= t %></li>
+                        <% end %>
+                        </ul>
+                    <%end %>
+
                 <%end %>
+                <%= t.text_area :content, class:'form-control ' %>
+                <%= hidden_field_tag :answer_id, f.id %>
+                <%= hidden_field_tag :answer, "si" %>
+                <%= hidden_field_tag :question, @question.id %>
 
+                <%= t.submit "Comentar", class:'btn btn-primary' %>
             <%end %>
-            <%= f.text_area :content, class:'form-control textarea ' %>
-            <%= hidden_field_tag :question, @question.id %>
-            <%= f.submit "Responder", class:'btn btn-primary' %>
-        <%end %>
-    <% else %>
-        <%= link_to "Iniciar sesion para Responder",login_path %>
+          </div>
+        </div>
+        <%else %>
+            <div class="row">
+              <div class="col-sm-8">
+                <%= link_to "Iniciar sesion para Comentar",login_path %>
+              </div>
+            </div>
+        <% end %>
+      </div>
+    
     <% end %>
-
   </div>
 
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-2">
+      <h2>Responder</h2>
+    </div>
+    <div class="col-sm-12">
+     <% if logged? %>
+          <%= form_for(:answer,url: answers_path) do |f| %>
+              <% current_errors_a %>
+
+              <% if errors_a? %>
+                  <% current_errors_a.each do |f| %>
+                      <ul>
+                        <li><%= f %></li>
+                      </ul>
+                  <%end %>
+
+              <%end %>
+              <%= f.text_area :content, class:'form-control textarea ' %>
+              <%= hidden_field_tag :question, @question.id %>
+              <%= f.submit "Responder", class:'btn btn-primary' %>
+          <%end %>
+      <% else %>
+          <%= link_to "Iniciar sesion para Responder",login_path %>
+      <% end %>
+
+    </div>
+
+  </div>
 </div>

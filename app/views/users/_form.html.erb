@@ -1,14 +1,14 @@
 <%= form_for(@user) do |f| %>
-    <%= render 'shared/error_messages' %>
-    <%= f.label 'Nombre' %>
-    <%= f.text_field :name, class:'form-control' %>
-    <%= f.label 'Correo' %>
-    <%= f.text_field :email, class:'form-control' %>
-    <%= f.label 'Contraseña' %>
-    <%= f.password_field :password, class:'form-control' %>
-    <%= f.label 'Confirmar Contraseña' %>
-    <%= f.password_field :password_confirm, class:'form-control' %>
+    
+    <%= f.label 'Registrarse',class:'session' %>
+    <%= f.text_field :name, class:'form-control',placeholder:'Nombre' %>
+    
+    <%= f.text_field :email, class:'form-control', placeholder:'Email' %>
+    
+    <%= f.password_field :password, class:'form-control',placeholder:'Contraseña' %>
+    
+    <%= f.password_field :password_confirm, class:'form-control',placeholder:'Confirmar contraseña' %>
     <br>
-    <%= f.submit :Registrarse, class:'btn btn-primary' %>
+    <%= f.submit :Registrarse, class:'btn btn-primary boton-login' %>
 
 <% end %>

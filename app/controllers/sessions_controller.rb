@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
         redirect_to root_url
       end
     else
-      flash[:danger] = "Usuario/password invalidos"
+      flash.now[:danger] = "Usuario/password invalidos"
       render 'new'
     end
   end

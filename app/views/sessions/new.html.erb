@@ -1,24 +1,30 @@
-<div class="row">
-  <div class="col-md-6 col-md-offset-2" >
-    <%= form_for(:session,url: login_path) do |f|%>
-      <%= f.label :email %>
-      <%= f.text_field :email, class:'form-control' %>
-        <%= f.label 'password' %>
-        <%= f.password_field :password, class:'form-control' %>
-        <%= link_to "Eres olvidadizo?", new_reset_password_path %>
-        <%= f.label :remember_me, class: "checkbox inline" do  %>
-          <%= f.check_box :remember_me %>
-           <span>Recordar en este computador</span>
 
-         <% end %>
-        <%= f.submit "iniciar sesion", class:'btn btn-primary' %>
+
+<div class="screen gradient-primary">
+   <% flash.each do |type,content| %>
+    <div class="alert alert-<%=type%>">
+     <%= content %>
+    </div>
     <% end %>
-
-    <%= link_to "Registrarse", signup_path %>
-
+  <div class="white">
+    <%= render 'shared/error_messages' %>
   </div>
-
-
-
-
+  <div class="adentro2">
+    <div class="padding1">
+      <%= form_for(:session,url: login_path) do |f|%>
+        <%= f.label 'Iniciar Sesión',class:'session' %>
+        <%= f.text_field :email, class:'form-control', placeholder: "Email" %>
+        <%= f.password_field :password, class:'form-control', placeholder: "Password" %>
+        <%= f.label :remember_me, class: "checkbox inline" do  %>
+        <%= f.check_box :remember_me %>
+          <span>Recordar en este computador</span>
+       <% end %>
+        <%= f.submit "iniciar sesion", class:'btn btn-primary boton-login' %>
+      <% end %>
+    </div>    
+    <a class="footer" href="/signup">Eres nuevo?  <span id="underline">Registrate</span></a>   
+  </div>
+  <div>
+    <%= link_to "Eres olvidadizo?", new_reset_password_path, class:'white' %>
+  </div> 
 </div>

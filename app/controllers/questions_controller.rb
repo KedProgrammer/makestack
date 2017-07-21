@@ -7,6 +7,7 @@ class QuestionsController < ApplicationController
     delete_errors_2
     delete_errors_r
     delete_error_v_va
+    delete_error
     
     if params[:order] == "nuevas"
      @questions = Question.order(created_at: :desc)
@@ -18,7 +19,12 @@ class QuestionsController < ApplicationController
       @questions = Question.order(created_at: :desc) 
     end
       @users = User.order(reputation: :desc)
+
+
+    
   end
+
+
 
 
 
@@ -88,11 +94,20 @@ class QuestionsController < ApplicationController
       if @current_user.reputation < 5
         flash[:danger] = "Debes tener mas de 5 puntos para votar"
         redirect_to @question
-      else  
-        @question.update_attribute(:votes,@question.votes + 1)
-        @user.update_attribute(:reputation, @user.reputation + 1)
-        flash[:success] = "Has votado correctamente, el usuario #{@user.name} ha ganado un punto de reputación"
-        redirect_to @question  
+      else
+          if !@current_user.qvalidation["#{@question.id}"]
+
+            @question.update_attribute(:votes,@question.votes + 1)
+            @user.update_attribute(:reputation, @user.reputation + 1)
+            flash[:success] = "Has votado correctamente, el usuario #{@user.name} ha ganado un punto de reputación"
+            @hash = @current_user.qvalidation
+            @hash["#{@question.id}"] = true
+            @current_user.update_attribute(:qvalidation, @hash)
+            redirect_to @question
+          else
+            flash[:danger] = "Ya has votado a esta pregunta"
+            redirect_to @question    
+          end
       end  
     else
       error_v
@@ -113,11 +128,20 @@ class QuestionsController < ApplicationController
       if @current_user.reputation < 5
         flash[:danger] = "Debes tener mas de 5 puntos para votar"
         redirect_to @question
-      else  
-        @question.update_attribute(:votes,@question.votes - 1)
-        @user.update_attribute(:reputation, @user.reputation - 1)
-        flash[:success] = "Has votado negativamente, el usuario #{@user.name} ha perdido un punto de reputación"
-        redirect_to @question
+      else 
+          if @current_user.qvalidation["#{@question.id}"]  
+            @question.update_attribute(:votes,@question.votes - 1)
+            @user.update_attribute(:reputation, @user.reputation - 1)
+            flash[:success] = "Has quitado voto correctamente, el usuario #{@user.name} ha perdido un punto de reputación"
+            @hash = @current_user.qvalidation
+            @hash["#{@question.id}"] = false
+            @current_user.update_attribute(:qvalidation, @hash)
+            redirect_to @question
+          else
+            flash[:danger] = "No has votado a esta pregunta"
+            redirect_to @question
+              
+          end  
       end  
     else
       error_v
