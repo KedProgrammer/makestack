@@ -10,7 +10,7 @@ class QuestionsController < ApplicationController
     delete_error
     
     if params[:order] == "nuevas"
-     @questions = Question.order(created_at: :desc)
+      @questions = Question.order(created_at: :desc)
     elsif params[:order] == "masvotadas"
       @questions = Question.order(votes: :desc)
     elsif params[:order] == "masrespuestas"
@@ -18,13 +18,11 @@ class QuestionsController < ApplicationController
     else 
       if params[:order].nil?
         if !params["search"].nil?
-          @questions = Question.where("tittle = ? ", params["search"]["buscar"])
+          @questions = search(params["search"]["buscar"])
         else
           @questions = Question.order(created_at: :desc)
         end
       end
-      
-  
     end 
       @users = User.order(reputation: :desc)
    

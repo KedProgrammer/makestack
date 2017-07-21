@@ -6,11 +6,12 @@
         <li><%= link_to image_tag("make.png",class:'image'), root_path, class:'navbar-brands'%></li>
         <li><%=  link_to "Usuarios" %> <li>
         <li><%=  link_to "Acerca de nosotros" %> <li>
-       
-         <%= form_for(:search,url: '/search',class:'navbar-form navbar-left') do |f|%> 
+        <li class="margen2"><%=  form_for(:search,url: '/search',class:'navbar-form navbar-left') do |f|%> 
            <%=f.text_field :buscar%> 
            <%=f.submit "Buscar"%> 
-        <%end%> 
+        <%end%> %></li>
+       
+          
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if logged? %>

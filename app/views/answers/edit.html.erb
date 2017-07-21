@@ -1,4 +1,6 @@
-<%= form_for( @answer) do |f| %>
+<%= render 'layouts/header' %>
+<div class="container">
+	<%= form_for( @answer) do |f| %>
     <%= render 'shared/error_messages' %>
     <%= f.label "Editar Respuesta" %>
     <br>
@@ -8,3 +10,6 @@
     <%= f.submit "editar",class:'btn btn-primary' %>
 
 <% end %>
+	
+</div>
+

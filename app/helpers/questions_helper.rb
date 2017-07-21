@@ -53,4 +53,23 @@ module QuestionsHelper
 
     aux.join(" ")
   end
+
+
+  def search(substring)
+
+
+    @questions = Question.all
+    @questions_result = []
+    @questions.each do |f|
+      if f.tittle.downcase.include?(substring) or f.content.downcase.include?(substring.downcase)
+        @questions_result.push(f)
+      end  
+    end
+    @questions_result
+  end
+
+
+
+
+
 end
