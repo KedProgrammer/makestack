@@ -15,15 +15,21 @@ class QuestionsController < ApplicationController
       @questions = Question.order(votes: :desc)
     elsif params[:order] == "masrespuestas"
       @questions = Question.order(respuestas: :desc)     
-    elsif params[:order] == nil
-      @questions = Question.order(created_at: :desc) 
-    end
+    else 
+      if params[:order].nil?
+        if !params["search"].nil?
+          @questions = Question.where("tittle = ? ", params["search"]["buscar"])
+        else
+          @questions = Question.order(created_at: :desc)
+        end
+      end
+      
+  
+    end 
       @users = User.order(reputation: :desc)
-
-
-    
+   
   end
-
+        
 
 
 

@@ -32,7 +32,7 @@ class CommentsController < ApplicationController
 
       end
     elsif params[:answer] == "no"
-      byebug
+      
       @comment = @question.comments.build(comment_params)
       if @comment.save
         @comment.update_attribute(:username,@user.name)

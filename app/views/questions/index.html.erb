@@ -72,8 +72,11 @@
             <%= link_to "Hacer una pregunta",new_question_path, class:'btn btn-primary' %>
           </div>
         <% else %>
-          <div class="col-sm-12 center">
+          <div class="col-sm-6 center">  
             <h3><%= @questions.count %> Preguntas</h3>
+          </div>
+          <div class="col-sm-6 vertical">  
+            <%= link_to "Hacer una pregunta",login_path, class:'btn btn-primary' %>
           </div>
         <% end %>
         <div class="col-sm-12 margen">
