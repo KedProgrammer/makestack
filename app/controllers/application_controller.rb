@@ -5,4 +5,5 @@ class ApplicationController < ActionController::Base
   include CommentsHelper
   include AnswersHelper
   include QuestionsHelper
+  #jajajaja
 end
